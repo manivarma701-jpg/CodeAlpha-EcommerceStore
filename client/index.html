@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CodeAlpha Store — Shop Electronics, Fashion, Home &amp; more</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">Code<span>Alpha</span> Store</a>
+    <form class="search-form" data-search-form>
+      <input type="text" placeholder="Search for products, brands and more" />
+      <button type="submit">Search</button>
+    </form>
+    <div class="nav-actions">
+      <div data-auth-area></div>
+      <a href="cart.html" class="nav-link cart-link">
+        🛒 Cart
+        <span class="cart-badge" data-cart-count>0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-tag">Task 1 · CodeAlpha Internship</span>
+    <h1>Everything you need, dropped at your door.</h1>
+    <p>Electronics, fashion, home essentials and sports gear — browse the catalog, add to cart, and check out in a few clicks.</p>
+  </div>
+</section>
+
+<nav class="chip-row" data-category-chips>
+  <button class="chip is-active" data-category="all">All</button>
+</nav>
+
+<main class="container">
+  <div class="section-title">
+    <h2 id="grid-heading">All products</h2>
+    <span id="result-count"></span>
+  </div>
+
+  <div class="product-grid" id="product-grid">
+    <!-- Skeleton loaders shown while fetching -->
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p><strong>CodeAlpha_Ecommerce</strong> — Task 1 demo project. Product photos are free-to-use placeholder images, not affiliated with any retailer.</p>
+</footer>
+
+<div class="toast" data-toast></div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

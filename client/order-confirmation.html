@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Confirmed — CodeAlpha Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">Code<span>Alpha</span> Store</a>
+    <div class="nav-actions" style="margin-left:auto;">
+      <div data-auth-area></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="confirm-shell" id="confirm-root">
+    <div class="skeleton" style="height:200px;"></div>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script>
+  async function loadConfirmation() {
+    const root = document.getElementById('confirm-root');
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (!id) {
+      root.innerHTML = `<p>No order found.</p><a href="index.html" class="btn btn-primary">Back to shop</a>`;
+      return;
+    }
+
+    try {
+      const order = await apiRequest(`/orders/${id}`, { auth: true });
+      root.innerHTML = `
+        <div class="confirm-badge">✓</div>
+        <h1>Order placed successfully!</h1>
+        <p style="color:var(--slate);margin-top:8px;">Thanks, ${order.shippingAddress.fullName.split(' ')[0]} — we've received your order and it's on its way.</p>
+        <div class="order-id-pill">Order #${order._id.slice(-8).toUpperCase()}</div>
+        <div class="panel" style="text-align:left;">
+          ${order.items
+            .map(
+              (i) => `<div class="mini-line"><img src="${i.image}" alt="${i.name}" /><div><div>${i.name}</div><div class="unit-price">Qty ${i.quantity} × ₹${i.price.toLocaleString('en-IN')}</div></div></div>`
+            )
+            .join('')}
+          <div class="summary-row total" style="margin-top:10px;"><span>Total paid</span><span>₹${order.totalAmount.toLocaleString('en-IN')}</span></div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:22px;">
+          <a href="orders.html" class="btn btn-dark">View My Orders</a>
+          <a href="index.html" class="btn btn-primary">Continue Shopping</a>
+        </div>
+      `;
+    } catch (err) {
+      root.innerHTML = `<p>${err.message}</p><a href="index.html" class="btn btn-primary">Back to shop</a>`;
+    }
+  }
+  document.addEventListener('DOMContentLoaded', loadConfirmation);
+</script>
+</body>
+</html>
